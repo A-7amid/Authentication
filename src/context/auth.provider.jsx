@@ -1,46 +1,52 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { useSignUp } from "./signup.provider";
+import { login } from "../utils/simulate-backend";
 
 const AuthContext = createContext();
 
 const useAuth = () => {
-  const context = useContext(AuthContext);
+  const auth = useContext(AuthContext);
 
-  if (!context) {
+  if (!auth) {
     throw new Error("useAuth must be used within a AuthProvider");
   }
 
-  return context;
+  return auth;
 };
 
 const AuthProvider = ({ children }) => {
   const { users } = useSignUp();
+  const { user, setUser } = useSignUp();
 
   const navigate = useNavigate();
 
-  const findUser = (user) => {
-    const formData = new FormData(document.getElementById("login-form"));
-    if (
-      user.email === formData.get("email") &&
-      user.password === formData.get("password")
-    ) {
-      navigate("/");
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("username", user.username);
-      console.log(users);
-    } else {
-      console.log("Login Failed");
-    }
-  };
+  const handleLogin = useCallback(
+    (email, password) => {
+      setUser(login(email, password));
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+      if (user) {
+        console.log("Login successful", user);
+        navigate("/");
+        localStorage.setItem("token", user.token);
+        console.log(users);
+      } else {
+        console.log("Login failed");
+      }
+    },
+    [navigate]
+  );
 
-    users.find(findUser);
-  };
-
-  const values = useMemo(() => ({ users, handleLogin }), [users, handleLogin]);
+  const values = useMemo(
+    () => ({ user, setUser, users, handleLogin }),
+    [users, handleLogin]
+  );
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };

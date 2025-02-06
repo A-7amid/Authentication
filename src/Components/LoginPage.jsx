@@ -7,6 +7,12 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    handleLogin(formData.get("email"), formData.get("password"));
+  };
+
   useEffect(() => {
     if (localStorage.getItem("token")) navigate("/");
   }, [navigate]);
@@ -15,7 +21,7 @@ const LoginPage = () => {
     <div className="flex items-center justify-center h-screen">
       <form
         id="login-form"
-        onSubmit={handleLogin}
+        onSubmit={handleSubmit}
         className="border-2 border-zinc-200 rounded-md"
       >
         <div className="px-7 py-8 flex flex-col">
@@ -36,19 +42,21 @@ const LoginPage = () => {
               type="password"
               name="password"
               placeholder="Password"
-              className="border-2 border-zinc-300 px-2 py-2 mt-1  outline-none rounded-lg"
+              className="border-2 border-zinc-300 px-2 py-2 mt-1 outline-none rounded-lg"
               required
             />
           </div>
-
           <button
             type="submit"
-            className="bg-blue-400 hover:bg-blue-400/90 duration-200 text-white py-2 flex justify-center rounded-lg font-medium text-xl"
+            className="bg-blue-400 hover:bg-blue-400/90  cursor-pointer duration-200 text-white py-2 flex justify-center rounded-lg font-medium text-xl"
           >
             Login
           </button>
+          {/* <div className="text-red-800 pt-2 text-xs italic">
+            Email or password is invalid.
+          </div> */}
 
-          <div className="text-black/50 flex flex-row text-xs items-center justify-center mt-6">
+          <div className="text-black/50 flex flex-row text-xs items-center justify-center mt-2">
             Need an account?
             <Link to="/signup" className="text-blue-400 ml-1">
               Sign Up

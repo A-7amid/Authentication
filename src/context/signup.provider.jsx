@@ -1,7 +1,8 @@
 import React from "react";
 import { createContext, useContext, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { dummyData } from "../../dummydata";
+import { dummyData } from "../utils/simulate-backend";
+import { useAuth } from "./auth.provider";
 
 const SignUpContext = createContext();
 
@@ -18,6 +19,7 @@ const useSignUp = () => {
 const SignUpProvider = ({ children }) => {
   const [users, setUsers] = useState(dummyData);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [user, setUser] = useState({});
 
   const navigate = useNavigate();
 
@@ -44,7 +46,7 @@ const SignUpProvider = ({ children }) => {
         setUsers((prevUsers) => [...prevUsers, newUser]);
 
         localStorage.setItem("token", newUser.token);
-        localStorage.setItem("username", newUser.username);
+        setUser(newUser);
         localStorage.setItem("users", JSON.stringify(users));
         navigate("/");
       }
@@ -53,7 +55,15 @@ const SignUpProvider = ({ children }) => {
   };
 
   const values = useMemo(
-    () => ({ users, setUsers, handleSignUp, isRegistered, setIsRegistered }),
+    () => ({
+      user,
+      setUser,
+      users,
+      setUsers,
+      handleSignUp,
+      isRegistered,
+      setIsRegistered,
+    }),
     [users, setUsers, handleSignUp, isRegistered, setIsRegistered]
   );
 

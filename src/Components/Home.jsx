@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Switch from "./Switch";
 import { useTheme } from "../context/theme.provider";
+import { useAuth } from "../context/auth.provider";
 
 const Home = () => {
+  const { user } = useAuth();
   const { theme } = useTheme();
 
   const navigate = useNavigate();
 
-  const userName = localStorage.getItem("username");
+  const name = user.username;
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -53,7 +55,7 @@ const Home = () => {
       </div>
       <div>
         <h3 className="justify-center flex  font-medium text-xl items-center h-full">
-          Welcome, {userName}
+          Welcome, {name}
         </h3>
       </div>
       <Link

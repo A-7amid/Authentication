@@ -1,3 +1,10 @@
+export const login = (email, password) => {
+  const user = dummyData.find(
+    (user) => user.email === email.toLowerCase() && user.password === password
+  );
+  return user || null;
+};
+
 export const dummyData = [
   {
     email: "fsdk@gmail.com",
