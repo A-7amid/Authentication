@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { users } from "../../dummydata";
+import { useSignUp } from "./signup.provider";
 
 const AuthContext = createContext();
 
@@ -15,19 +15,22 @@ const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
+  const { users } = useSignUp();
+
   const navigate = useNavigate();
 
   const findUser = (user) => {
-    const formData = new FormData(document.getElementById("form"));
+    const formData = new FormData(document.getElementById("login-form"));
     if (
       user.email === formData.get("email") &&
       user.password === formData.get("password")
     ) {
       navigate("/");
-      console.log("done");
       localStorage.setItem("token", user.token);
+      localStorage.setItem("username", user.username);
+      console.log(users);
     } else {
-      console.log("Login Failed.");
+      console.log("Login Failed");
     }
   };
 

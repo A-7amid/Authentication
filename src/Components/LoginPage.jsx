@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { users } from "../../dummydata";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth.provider";
 
 const LoginPage = () => {
@@ -15,7 +14,7 @@ const LoginPage = () => {
   return (
     <div className="flex items-center justify-center h-screen">
       <form
-        id="form"
+        id="login-form"
         onSubmit={handleLogin}
         className="border-2 border-zinc-200 rounded-md"
       >
@@ -31,21 +30,30 @@ const LoginPage = () => {
               placeholder="Email"
               className="border-2 border-zinc-300 px-2 py-2 mt-1 outline-none rounded-lg"
               autoFocus
+              required
             />
             <input
               type="password"
               name="password"
               placeholder="Password"
               className="border-2 border-zinc-300 px-2 py-2 mt-1  outline-none rounded-lg"
+              required
             />
           </div>
 
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-500/90 duration-200 text-white py-2 flex justify-center rounded-lg font-medium text-xl"
+            className="bg-blue-400 hover:bg-blue-400/90 duration-200 text-white py-2 flex justify-center rounded-lg font-medium text-xl"
           >
             Login
           </button>
+
+          <div className="text-black/50 flex flex-row text-xs items-center justify-center mt-6">
+            Need an account?
+            <Link to="/signup" className="text-blue-400 ml-1">
+              Sign Up
+            </Link>
+          </div>
         </div>
       </form>
     </div>
