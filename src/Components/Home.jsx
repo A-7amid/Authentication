@@ -10,8 +10,6 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const name = user.username;
-
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/login");
@@ -25,46 +23,60 @@ const Home = () => {
 
   return (
     <div
-      className={`h-screen items-center ${
-        theme === "light" ? "bg-white" : "bg-neutral-800 text-white"
+      className={`h-screen ${
+        theme === "light" ? "bg-white" : "bg-zinc-950 text-white"
       } duration-200`}
     >
-      <div className="flex justify-between pt-2 px-2">
-        <Switch />
+      <div className="pt-4 container mx-auto">
+        <div className="flex w-full justify-between">
+          <span className="font-black text-xl">TaskFlow</span>
 
-        <h1 className="text-2xl flex font-semibold">Home Page</h1>
+          <div className="flex items-center gap-x-4">
+            <Switch />
+            <Link
+              className={`${
+                theme == "light"
+                  ? "bg-transparent border-2 border-gray-300 hover:bg-green-500/90"
+                  : "bg-transparent border-2 border-neutral-800 hover:bg-neutral-800"
+              } px-4 py-1 font-medium rounded-md duration-200`}
+              to="/login"
+            >
+              Login
+            </Link>
 
-        <div className="gap-x-3 flex">
-          <Link
-            className={`${
-              theme == "light"
-                ? "bg-green-500 hover:bg-green-500/90"
-                : "bg-green-600 hover:bg-green-600/90"
-            } mb-3 px-4 py-2 font-medium text-lg rounded-lg duration-200`}
-            to="/login"
-          >
-            Login
-          </Link>
-          <Link
-            className="bg-gray-500 hover:bg-gray-500/90 mb-3 px-4 py-2 font-medium text-lg rounded-lg duration-200"
-            to="/signup"
-          >
-            Sign Up
-          </Link>
+            <Link
+              className={`${
+                theme == "light"
+                  ? "bg-transparent border-2 border-gray-300 hover:bg-green-500/90"
+                  : "bg-white hover:bg-neutral-200 text-black"
+              } px-3 py-1 font-medium rounded-md duration-200`}
+              to="/signup"
+            >
+              Sign Up
+            </Link>
+          </div>
         </div>
       </div>
       <div>
-        <h3 className="justify-center flex  font-medium text-xl items-center h-full">
+        {/* <h3 className="justify-center flex  font-medium text-xl items-center h-full">
           Welcome, {name}
-        </h3>
+        </h3> */}
       </div>
+
+      <div className="flex flex-col gap-y-4 items-center justify-center -mt-7 h-full">
+        <h3 className="font-bold text-4xl">Welcome, {user?.username}</h3>
+        <p className="text-xl">
+          A modern authentication UI built with React.js and Tailwind CSS
+        </p>
+      </div>
+
       <Link
         onClick={handleLogOut}
-        className={`mx-2 ${
+        className={`mx-2 mt-10 flex w-fit ${
           theme === "light"
             ? "bg-red-500 hover:bg-white text-white hover:text-red-500 border-2 border-red-500"
             : "bg-red-500 hover:bg-transparent text-white hover:text-red-400 border-2 border-red-400"
-        } hover:underline h-fit mb-3 px-4 py-2 font-medium text-lg rounded-lg mt-3 duration-200`}
+        } hover:underline h-fit px-3 py-1 font-medium text-lg rounded-lg mt-3 duration-200`}
         to="/login"
       >
         Log Out
