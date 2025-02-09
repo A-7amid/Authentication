@@ -8,7 +8,7 @@ import ResetPasswordPage from "./Components/ResetPasswordPage";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home />} errorElement={<NotFound />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/resetpassword" element={<ResetPasswordPage />} />
