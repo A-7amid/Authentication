@@ -6,8 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSignUp } from "./signup.provider";
-import { login } from "../utils/simulate-backend";
+import { dummyData, login, signUp } from "../utils/simulate-backend";
 
 const AuthContext = createContext();
 
@@ -22,20 +21,26 @@ const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-  const { users } = useSignUp();
-  const { user, setUser } = useSignUp();
+  const [user, setUser] = useState("");
+  const [users, setUsers] = useState(dummyData);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const navigate = useNavigate();
 
   const handleLogin = useCallback(
     (email, password) => {
-      setUser(login(email, password));
+      const user = login(email, password);
 
       if (user) {
+        setUser(user);
         console.log("Login successful", user);
         navigate("/");
         localStorage.setItem("token", user.token);
         console.log(users);
+
+        setIsLoggedIn(true);
       } else {
         console.log("Login failed");
       }
@@ -43,9 +48,74 @@ const AuthProvider = ({ children }) => {
     [navigate]
   );
 
+  const handleSignUp = useCallback(
+    (username, email, password) => {
+      var newUser = signUp(username, email, password);
+
+      if (!newUser) {
+        newUser = {
+          email: email,
+          id: users.length + 1,
+          password: password,
+          token: users.length + 100,
+          username: username,
+        };
+        users.push(newUser);
+        console.log(users);
+        localStorage.setItem("token", newUser.token);
+        localStorage.setItem("users", JSON.stringify(users));
+        setIsRegistered(false);
+        navigate("/");
+      } else {
+        console.log(newUser);
+        setIsRegistered(true);
+      }
+      setUser(newUser.username);
+    },
+    [navigate]
+  );
+
+  const handleResetPassword = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    users.map((user) => {
+      if (user.email === email.toLowerCase()) {
+        user.password = password;
+
+        console.log(user);
+        navigate("/login");
+      }
+    });
+
+    console.log(users, email, password);
+  };
+
   const values = useMemo(
-    () => ({ user, setUser, users, handleLogin }),
-    [users, handleLogin]
+    () => ({
+      user,
+      users,
+      setUsers,
+      handleLogin,
+      isLoggedIn,
+      handleSignUp,
+      isRegistered,
+      setIsRegistered,
+    }),
+    [
+      user,
+      users,
+      setUsers,
+      handleLogin,
+      isLoggedIn,
+      handleSignUp,
+      isRegistered,
+      setIsRegistered,
+    ]
   );
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

@@ -5,6 +5,27 @@ export const login = (email, password) => {
   return user || null;
 };
 
+export const signUp = (username, email, password) => {
+  const newUser = dummyData.find((user) => user.email === email.toLowerCase());
+  const authUser = {
+    username: username,
+    email: email,
+    password: password,
+    token: dummyData.length + 100,
+    id: dummyData.length + 1,
+  };
+
+  return newUser || null;
+
+  // {
+  //   username: username,
+  //   email: email,
+  //   password: password,
+  //   token: dummyData.length + 100,
+  //   id: dummyData.length + 1,
+  // }
+};
+
 export const dummyData = [
   {
     email: "fsdk@gmail.com",

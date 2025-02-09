@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useResetPassword } from "../context/resetpassword.provider";
+import { useAuth } from "../context/auth.provider";
 
 const ResetPasswordPage = () => {
-  const { handleResetPassword } = useResetPassword();
+  const { handleResetPassword } = useAuth();
 
   return (
     <div className="flex items-center justify-center h-screen bg-linear-to-br from-neutral-800 to-zinc-950 text-white">
@@ -13,8 +12,8 @@ const ResetPasswordPage = () => {
       >
         <div className="px-6 py-5 flex flex-col">
           <div className="flex flex-col mb-3 gap-y-3">
-            <h1 className="font-bold flex text-2xl justify-center mb-2">
-              Login
+            <h1 className="font-bold flex text-2xl justify-center mb-3">
+              Create new password
             </h1>
 
             <label htmlFor="email" className="font-semibold w-fit">

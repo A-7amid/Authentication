@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSignUp } from "../context/signup.provider";
+import { useAuth } from "../context/auth.provider";
 
 const SignUpPage = () => {
-  const { handleSignUp, isRegistered, setIsRegistered } = useSignUp();
+  const { handleSignUp, isRegistered } = useAuth();
 
   const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    handleSignUp(
+      formData.get("username"),
+      formData.get("email"),
+      formData.get("password")
+    );
+  };
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -13,15 +23,11 @@ const SignUpPage = () => {
     }
   }, [navigate]);
 
-  useEffect(() => {
-    setIsRegistered(false);
-  });
-
   return (
     <div className="flex items-center justify-center h-screen bg-linear-to-br from-neutral-800 to-zinc-950 text-white">
       <form
         id="signup-form"
-        onSubmit={handleSignUp}
+        onSubmit={handleSubmit}
         className="border-[1px] border-zinc-800 rounded-lg bg-transparent backdrop-blur-lg"
       >
         <div className="px-6 py-5 flex flex-col">
@@ -43,7 +49,7 @@ const SignUpPage = () => {
               required
             />
             {isRegistered && (
-              <div className="text-red-400 font-medium">
+              <div className="text-red-400 font-medium mt-3">
                 Email is already registered
               </div>
             )}
@@ -80,12 +86,13 @@ const SignUpPage = () => {
             Sign Up
           </button>
 
-          <span className="select-none mt-3">
-            ـــــــــــــــــــــــــــــــــــــ or
-            ـــــــــــــــــــــــــــــــــــــ
-          </span>
+          <div className="select-none mt-3 flex items-center gap-x-2 font-medium text-xs">
+            <div className="h-px flex bg-white w-full"></div>
+            <span>or</span>
+            <div className="h-px flex bg-white w-full"></div>
+          </div>
 
-          <div className="flex flex-col gap-y-2 justify-center mt-4">
+          <div className="flex flex-col gap-y-2 justify-center mt-3">
             <Link className="border-zinc-800 hover:bg-zinc-800 items-center duration-200 font-medium border-2 w-full py-1 justify-center flex rounded-md">
               <img src="/github.png" alt="github" className="size-4 mr-3" />
               Sign up with GitHub
