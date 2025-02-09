@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
 
   const handleLogin = useCallback(
     (email, password) => {
-      const user = login(email, password);
+      const user1 = login(email, password);
 
       if (user) {
         setUser(user);
@@ -65,7 +65,7 @@ const AuthProvider = ({ children }) => {
         localStorage.setItem("token", newUser.token);
         localStorage.setItem("users", JSON.stringify(users));
         setIsRegistered(false);
-        navigate("/");
+        navigate("/login");
       } else {
         console.log(newUser);
         setIsRegistered(true);
@@ -87,8 +87,9 @@ const AuthProvider = ({ children }) => {
       if (user.email === email.toLowerCase()) {
         user.password = password;
 
+        user = user.username;
         console.log(user);
-        navigate("/login");
+        navigate("/");
       }
     });
 
@@ -105,6 +106,7 @@ const AuthProvider = ({ children }) => {
       handleSignUp,
       isRegistered,
       setIsRegistered,
+      handleResetPassword,
     }),
     [
       user,
@@ -115,6 +117,7 @@ const AuthProvider = ({ children }) => {
       handleSignUp,
       isRegistered,
       setIsRegistered,
+      handleResetPassword,
     ]
   );
 
