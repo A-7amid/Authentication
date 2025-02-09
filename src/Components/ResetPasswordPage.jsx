@@ -23,22 +23,19 @@ const ResetPasswordPage = () => {
               type="email"
               id="email"
               name="email"
-              placeholder="Enter your email"
               className="border-[1px] border-zinc-800 px-3 py-2 outline-zinc-800 focus:outline-2 outline-offset-2 rounded-md pr-24"
               autoFocus
               required
             />
 
             <label htmlFor="password" className="font-semibold w-fit">
-              Password
+              New Password
             </label>
             <input
               type="password"
               id="password"
               name="password"
-              placeholder="Enter your password"
               className="border-[1px] border-zinc-800 px-3 py-2 outline-zinc-800 focus:outline-2 outline-offset-2 rounded-md pr-24"
-              autoFocus
               required
             />
 
