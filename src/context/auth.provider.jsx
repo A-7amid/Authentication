@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
 
   const handleLogin = useCallback(
     (email, password) => {
-      const user1 = login(email, password);
+      const user = login(email, password);
 
       if (user) {
         setUser(user);

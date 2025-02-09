@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth.provider";
-import { useTheme } from "../context/theme.provider";
 
 const LoginPage = () => {
   const { handleLogin } = useAuth();
-  const { theme } = useTheme();
 
   const navigate = useNavigate();
 
