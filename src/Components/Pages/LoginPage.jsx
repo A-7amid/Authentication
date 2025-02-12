@@ -7,12 +7,16 @@ import Line from "../Line";
 import { useCookies } from "react-cookie";
 
 const LoginPage = () => {
-  const { handleLogin, isLoggedIn } = useAuth();
+  const { handleLogin, isLoggedIn, setIsLoggedIn } = useAuth();
   const { theme } = useTheme();
 
-  const [cookies] = useCookies(["token"]);
+  const [cookies, setCookie] = useCookies(["token"]);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLoggedIn(true);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
