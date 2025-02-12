@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { useAuth } from "../context/auth.provider";
+import { useAuth } from "../../context/auth.provider";
 import { Link } from "react-router-dom";
+import Line from "../Line";
+import Navbar from "../Navbar";
+import { useTheme } from "../../context/theme.provider";
 
 const ResetPasswordPage = () => {
   const { handleResetPassword } = useAuth();
+  const { theme } = useTheme();
 
   const [isHidden, setIsHidden] = useState(true);
 
@@ -12,14 +16,31 @@ const ResetPasswordPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-linear-to-br from-neutral-800 to-zinc-950 text-white">
+    <div
+      className={`flex flex-col items-center justify-center h-screen duration-200 transition ${
+        theme === "light"
+          ? "bg-white text-black"
+          : "bg-linear-to-br from-neutral-800 to-zinc-950 text-white"
+      }`}
+    >
+      <div className="absolute top-0 w-full">
+        <Navbar />
+        <Line />
+      </div>
+
       <form
         onSubmit={handleResetPassword}
-        className={`border-[1px] border-zinc-800 rounded-md`}
+        className={`border-[1px] shadow-lg ${
+          theme == "light" ? "border-zinc-200" : "border-zinc-800"
+        } rounded-lg`}
       >
         <div className="px-6 py-4 flex flex-col">
           <div className="flex flex-col mb-3 gap-y-3">
-            <h1 className="font-bold flex text-2xl justify-center mb-2 flex-col items-center gap-y-5">
+            <h1
+              className={`font-bold flex flex-col items-center justify-center gap-y-4 mt-2 text-2xl ${
+                theme == "light" ? "text-slate-950" : "text-white"
+              } justify-center mb-2`}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -36,32 +57,44 @@ const ResetPasswordPage = () => {
               Reset Password
             </h1>
 
-            <label htmlFor="email" className="font-semibold w-fit">
+            <label htmlFor="email" className="font-semibold w-fit -mb-3">
               Email
             </label>
             <input
               type="email"
               id="email"
               name="email"
-              className="border-[1px] border-zinc-800 px-3 py-2 outline-zinc-800 focus:outline-2 outline-offset-2 rounded-md pr-24"
+              className={`border-[1px] ${
+                theme == "light"
+                  ? "border-slate-200 placeholder-slate-500 outline-zinc-800 focus:outline-[3px] outline-offset-2"
+                  : "border-zinc-800 placeholder-zinc-500 outline-zinc-800 focus:outline-[2px] outline-offset-2"
+              } px-3 py-[6px] mt-1 rounded-md pr-24`}
               autoFocus
               required
             />
 
-            <label htmlFor="password" className="font-semibold w-fit">
+            <label htmlFor="password" className="font-semibold w-fit -mb-3">
               New Password
             </label>
             <input
               type="password"
               id="password"
               name="password"
-              className="border-[1px] border-zinc-800 px-3 py-2 outline-zinc-800 focus:outline-2 outline-offset-2 rounded-md pr-24"
+              className={`border-[1px] ${
+                theme == "light"
+                  ? "border-slate-200 placeholder-slate-500 outline-zinc-800 focus:outline-[3px] outline-offset-2"
+                  : "border-zinc-800 placeholder-zinc-500 outline-zinc-800 focus:outline-[2px] outline-offset-2"
+              } px-3 py-[6px] mt-1 rounded-md pr-24`}
               required
             />
 
             <button
               type="submit"
-              className="bg-white mt-3 cursor-pointer duration-200 hover:bg-neutral-200 text-black/90 py-2 flex justify-center rounded-md font-semibold text-lg"
+              className={` cursor-pointer ${
+                theme == "light"
+                  ? "text-white bg-slate-900 hover:bg-slate-800"
+                  : "bg-white text-slate-900"
+              } duration-200 py-[6px] flex justify-center rounded-md font-medium text-lg`}
             >
               Reset password
             </button>
@@ -85,7 +118,13 @@ const ResetPasswordPage = () => {
                 <path d="m12 19-7-7 7-7"></path>
                 <path d="M19 12H5"></path>
               </svg>
-              <div className="hover:border-white border-b-[1px] border-transparent">
+              <div
+                className={`${
+                  theme == "light"
+                    ? "hover:border-slate-900"
+                    : "hover:border-white"
+                } border-b-[1px] border-transparent`}
+              >
                 Back to Login
               </div>
             </Link>

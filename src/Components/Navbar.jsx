@@ -21,7 +21,14 @@ const Navbar = () => {
   return (
     <div className="container mx-auto py-3">
       <div className="flex w-full justify-between items-center">
-        <span className="font-bold text-2xl cursor-pointer">TaskFlow</span>
+        <Link
+          to="/"
+          className={`font-bold text-2xl ${
+            theme == "light" ? "text-slate-950" : "text-white"
+          }`}
+        >
+          TaskFlow
+        </Link>
 
         <div className="flex items-center gap-x-3">
           <Switch />
@@ -36,7 +43,7 @@ const Navbar = () => {
                 } px-4 py-[6px] font-medium rounded-md  duration-200 transition`}
                 to="/login"
               >
-                Log in
+                Login
               </Link>
 
               <Link
@@ -51,7 +58,8 @@ const Navbar = () => {
               </Link>
             </div>
           ) : (
-            <button
+            <Link
+              to="/login"
               onClick={handleLogOut}
               className={`  ${
                 theme === "light"
@@ -70,14 +78,14 @@ const Navbar = () => {
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-log-out mr-2 h-4 w-4"
+                class="lucide lucide-log-out mr-1 h-4 w-4"
               >
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
                 <line x1="21" x2="9" y1="12" y2="12"></line>
               </svg>
               Log Out
-            </button>
+            </Link>
           )}
         </div>
       </div>

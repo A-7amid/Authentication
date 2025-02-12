@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState("");
   const [users, setUsers] = useState(dummyData);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isRegistered, setIsRegistered] = useState(false);
 
   const navigate = useNavigate();
@@ -41,8 +41,9 @@ const AuthProvider = ({ children }) => {
         console.log(users);
 
         setIsLoggedIn(true);
-      } else {
+      } else if (user === null) {
         console.log("Login failed");
+        setIsLoggedIn(false);
       }
     },
     [navigate]
