@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { dummyData, login, signUp } from "../utils/simulate-backend";
+import { useCookies } from "react-cookie";
 
 const AuthContext = createContext();
 
@@ -21,6 +22,7 @@ const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
+  const [cookies, setCookie] = useCookies(["token", "users"]);
   const [user, setUser] = useState("");
   const [users, setUsers] = useState(dummyData);
 
@@ -37,7 +39,8 @@ const AuthProvider = ({ children }) => {
         setUser(user);
         console.log("Login successful", user);
         navigate("/");
-        localStorage.setItem("token", user.token);
+        // localStorage.setItem("token", user.token);
+        setCookie("token", user.token);
         console.log(users);
 
         setIsLoggedIn(true);
@@ -63,15 +66,17 @@ const AuthProvider = ({ children }) => {
         };
         users.push(newUser);
         console.log(users);
-        localStorage.setItem("token", newUser.token);
-        localStorage.setItem("users", JSON.stringify(users));
+        // localStorage.setItem("token", newUser.token);
+        // localStorage.setItem("users", JSON.stringify(users));
+        setCookie("token", user.token);
+        setCookie("users", JSON.stringify(users));
         setIsRegistered(false);
-        navigate("/login");
+        navigate("/");
       } else {
         console.log(newUser);
         setIsRegistered(true);
       }
-      setUser(newUser.username);
+      setUser(newUser);
     },
     [navigate]
   );
@@ -91,6 +96,8 @@ const AuthProvider = ({ children }) => {
         user = user.username;
         console.log(user);
         navigate("/");
+      } else {
+
       }
     });
 

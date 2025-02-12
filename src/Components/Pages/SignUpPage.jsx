@@ -4,12 +4,15 @@ import { useAuth } from "../../context/auth.provider";
 import Navbar from "../Navbar";
 import Line from "../Line";
 import { useTheme } from "../../context/theme.provider";
+import { useCookies } from "react-cookie";
 
 const SignUpPage = () => {
   const { handleSignUp, isRegistered } = useAuth();
   const { theme } = useTheme();
 
   const navigate = useNavigate();
+
+  const [cookies, setCookie] = useCookies(["token"]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,9 +25,7 @@ const SignUpPage = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      navigate("/");
-    }
+    if (cookies.token) navigate("/");
   }, [navigate]);
 
   return (

@@ -1,20 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import Switch from "./Switch";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/theme.provider";
+import { useCookies } from "react-cookie";
 
 const Navbar = () => {
   const { theme } = useTheme();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+
   useEffect(() => {
-    if (localStorage.getItem("token")) setIsLoggedIn(true);
+    if (cookies.token) setIsLoggedIn(true);
   }, []);
 
   const handleLogOut = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("username");
+    removeCookie("token");
+    removeCookie("username");
     setIsLoggedIn(false);
   };
 

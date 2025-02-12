@@ -4,10 +4,13 @@ import { useAuth } from "../../context/auth.provider";
 import Navbar from "../Navbar";
 import { useTheme } from "../../context/theme.provider";
 import Line from "../Line";
+import { useCookies } from "react-cookie";
 
 const LoginPage = () => {
   const { handleLogin, isLoggedIn } = useAuth();
   const { theme } = useTheme();
+
+  const [cookies] = useCookies(["token"]);
 
   const navigate = useNavigate();
 
@@ -18,7 +21,7 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token")) navigate("/");
+    if (cookies.token) navigate("/");
   }, [navigate]);
 
   return (
@@ -62,7 +65,13 @@ const LoginPage = () => {
                   Email
                 </label>
               ) : (
-                <div className="text-red-400 mb-1 italic">
+                <div
+                  className={`${
+                    theme == "light"
+                      ? "font-medium text-red-500"
+                      : "font-normal"
+                  } mb-1 italic text-red-400`}
+                >
                   Email or password is invalid.
                 </div>
               )}
@@ -93,7 +102,13 @@ const LoginPage = () => {
                   Password
                 </label>
               ) : (
-                <div className="text-red-400 mb-1 italic">
+                <div
+                  className={`${
+                    theme == "light"
+                      ? "font-medium text-red-500"
+                      : "font-normal"
+                  } mb-1 italic text-red-400`}
+                >
                   Email or password is invalid.
                 </div>
               )}

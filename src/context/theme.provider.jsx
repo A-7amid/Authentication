@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { createContext, useContext, useState } from "react";
+import { useCookies } from "react-cookie";
 
 const ThemeContext = createContext();
 
@@ -15,10 +16,11 @@ const useTheme = () => {
 
 const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
+  const [cookies, setCookie] = useCookies(["theme"]);
 
   const handleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-    localStorage.setItem("theme", theme);
+    setCookie("theme", theme);
   };
 
   const values = useMemo(

@@ -4,15 +4,18 @@ import { useAuth } from "../context/auth.provider";
 import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import Line from "./Line";
+import { useCookies } from "react-cookie";
 
 const Home = () => {
   const { user } = useAuth();
   const { theme } = useTheme();
 
+  const [cookies, setCookie] = useCookies(["token"]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) navigate("/login");
+    if (!cookies.token) navigate("/login");
   }, [navigate]);
 
   return (
