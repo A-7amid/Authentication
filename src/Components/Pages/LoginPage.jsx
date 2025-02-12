@@ -5,6 +5,7 @@ import Navbar from "../Navbar";
 import { useTheme } from "../../context/theme.provider";
 import Line from "../Line";
 import { useCookies } from "react-cookie";
+import Loading from "../Loading";
 
 const LoginPage = () => {
   const { handleLogin, isLoggedIn, setIsLoggedIn } = useAuth();
@@ -19,6 +20,10 @@ const LoginPage = () => {
     const formData = new FormData(e.target);
     handleLogin(formData.get("email"), formData.get("password"));
   };
+
+  useEffect(() => {
+    setIsLoggedIn(true);
+  }, []);
 
   useEffect(() => {
     if (cookies.token) navigate("/");
@@ -37,6 +42,7 @@ const LoginPage = () => {
         <Line />
       </div>
 
+      <Loading />
       <form
         id="login-form"
         onSubmit={handleSubmit}

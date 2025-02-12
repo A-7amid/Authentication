@@ -97,7 +97,6 @@ const AuthProvider = ({ children }) => {
         console.log(user);
         navigate("/");
       } else {
-
       }
     });
 
@@ -111,6 +110,7 @@ const AuthProvider = ({ children }) => {
       setUsers,
       handleLogin,
       isLoggedIn,
+      setIsLoggedIn,
       handleSignUp,
       isRegistered,
       setIsRegistered,
@@ -122,6 +122,7 @@ const AuthProvider = ({ children }) => {
       setUsers,
       handleLogin,
       isLoggedIn,
+      setIsLoggedIn,
       handleSignUp,
       isRegistered,
       setIsRegistered,

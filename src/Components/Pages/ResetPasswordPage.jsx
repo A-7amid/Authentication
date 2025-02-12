@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Line from "../Line";
 import Navbar from "../Navbar";
 import { useTheme } from "../../context/theme.provider";
+import Loading from "../Loading";
 
 const ResetPasswordPage = () => {
   const { handleResetPassword } = useAuth();
@@ -27,6 +28,8 @@ const ResetPasswordPage = () => {
         <Navbar />
         <Line />
       </div>
+
+      <Loading />
 
       <form
         onSubmit={handleResetPassword}

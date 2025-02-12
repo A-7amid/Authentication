@@ -5,6 +5,7 @@ import Navbar from "../Navbar";
 import Line from "../Line";
 import { useTheme } from "../../context/theme.provider";
 import { useCookies } from "react-cookie";
+import Loading from "../Loading";
 
 const SignUpPage = () => {
   const { handleSignUp, isRegistered } = useAuth();
@@ -40,6 +41,8 @@ const SignUpPage = () => {
         <Navbar />
         <Line />
       </div>
+
+      <Loading />
 
       <form
         id="signup-form"
