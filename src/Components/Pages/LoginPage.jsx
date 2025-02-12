@@ -14,10 +14,6 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setIsLoggedIn(true);
-  }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
